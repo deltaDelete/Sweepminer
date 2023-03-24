@@ -10,18 +10,14 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Sweepminer;
+namespace Sweepminer.Views;
 /// <summary>
-/// Interaction logic for MainWindow.xaml
+/// Логика взаимодействия для DifficultyChooserWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
-{
-    public MainWindow()
-    {
+public partial class DifficultyChooserWindow : Window {
+    public DifficultyChooserWindow() {
         InitializeComponent();
-        //DataContext = new MainWindowViewModel();
     }
 }

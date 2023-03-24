@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sweepminer"
+        xmlns:vm="clr-namespace:Sweepminer.ViewModels"
+        xmlns:m="clr-namespace:Sweepminer.Models"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
     <Window.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolConverter" />
     </Window.Resources>
@@ -18,7 +23,7 @@
         
         <ListView Margin="10" ItemsSource="{Binding Cells}">
             <ListView.ItemTemplate>
-                <DataTemplate DataType="{x:Type local:Cell}">
+                <DataTemplate DataType="{x:Type m:Cell}">
                     <StackPanel>
                         <Button Width="32" Height="32" Command="{Binding OpenCommand}">
                             <Button.InputBindings>

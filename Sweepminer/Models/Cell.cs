@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Sweepminer;
+namespace Sweepminer.Models;
 
 public class Cell : INotifyPropertyChanged {
     public ICommand FlagCommand { get; }
@@ -39,6 +39,7 @@ public class Cell : INotifyPropertyChanged {
     private static readonly BitmapImage _mine = new BitmapImage(new Uri("pack://application:,,,/Assets/mine.png"));
 
     public event PropertyChangedEventHandler? PropertyChanged;
+    public event Action Opened;
 
     private ImageSource _image;
     private bool _isOpened = false;
@@ -66,6 +67,8 @@ public class Cell : INotifyPropertyChanged {
         if (IsMine) {
             Image = _mine;
         }
+
+        Opened?.Invoke();
 
         return !IsMine;
     }
