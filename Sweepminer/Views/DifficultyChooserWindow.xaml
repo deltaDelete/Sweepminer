@@ -9,13 +9,14 @@
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         Topmost="True"
-        Title="DifficultyChooserWindow" Height="200" Width="250">
+        WindowStartupLocation="CenterScreen"
+        Title="Выбор сложности" Height="200" Width="300">
     <Window.DataContext>
         <vm:DifficultyChooserViewModel />
     </Window.DataContext>
     <DockPanel LastChildFill="True">
         <WrapPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="10">
-            <Button Content="Ок" Click="OkClick" Padding="10 2" Margin="10 2"/>
+            <Button Content="Ок" Click="OkClick" IsDefault="True" Padding="10 2" Margin="10 2"/>
             <Button Content="Отмена" Click="CancelClick" Padding="10 2" Margin="10 2"/>
         </WrapPanel>
         <ListView ItemsSource="{Binding Difficulties}" SelectedItem="{Binding SelectedDifficulty}" SelectedIndex="0">

@@ -15,7 +15,7 @@ public class DifficultyChooserViewModel : ViewModelBase {
         _difficulties.Add(new Difficulty(16,16,40) {
             Name = "Любитель"
         });
-        _difficulties.Add(new Difficulty(16, 40, 99) {
+        _difficulties.Add(new Difficulty(16, 30, 99) {
             Name = "Профессионал"
         });
     }

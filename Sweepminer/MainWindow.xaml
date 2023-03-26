@@ -7,22 +7,44 @@
         xmlns:vm="clr-namespace:Sweepminer.ViewModels"
         xmlns:m="clr-namespace:Sweepminer.Models"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="Sweepminer" Height="450" Width="800">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
     <Window.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolConverter" />
         <local:InverseBoolConverter x:Key="InverseBoolConverter" />
+        <local:DateTimeToTimeConverter x:Key="DateTimeConverter"/>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Alt" Key="X" Command="{Binding CloseCommand}"/>
+        <KeyBinding Modifiers="Control" Key="N" Command="{Binding NewGameCommand}"/>
+        <KeyBinding Key="F1" Command="{Binding HelpCommand}"/>
+    </Window.InputBindings>
     <DockPanel LastChildFill="True">
-        <ToolBarTray DockPanel.Dock="Top">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Игра">
+                <MenuItem Header="Новая игра" Command="{Binding NewGameCommand}" />
+                <MenuItem Header="Выйти" Command="{Binding CloseCommand}" />
+            </MenuItem>
+            <MenuItem Header="Помощь">
+                <MenuItem Header="Как играть?" Command="{Binding HelpCommand}"/>
+                <MenuItem Header="О программе" Command="{Binding AboutCommand}"/>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray DockPanel.Dock="Top" HorizontalAlignment="Stretch">
             <ToolBar>
                 <Button Content="Новая игра" Command="{Binding NewGameCommand}" />
+                <Separator />
+                <TextBlock VerticalAlignment="Center">
+                    <Run>Время: </Run>
+                    <Run Text="{Binding Timer, Mode=OneWay,Converter={StaticResource DateTimeConverter}}"/>
+                </TextBlock>
             </ToolBar>
         </ToolBarTray>
         
-        <ListView Margin="10" ItemsSource="{Binding Game.Field}">
+        <ListView Margin="10" ItemsSource="{Binding Game.Field}" HorizontalAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type m:Cell}">
                     <StackPanel>
@@ -45,7 +67,7 @@
 
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="{Binding Game.Difficulty.Columns}" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    <UniformGrid Columns="{Binding Game.Difficulty.Columns}" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                  Rows="{Binding Game.Difficulty.Rows}"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>

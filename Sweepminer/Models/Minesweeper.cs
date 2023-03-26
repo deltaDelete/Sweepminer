@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -14,6 +15,8 @@ public class Minesweeper : INotifyPropertyChanged {
     private bool _isFieldUnlocked = true;
     private bool _isWin = false;
 
+    public event Action Losed;
+    public event Action Won;
     public Difficulty Difficulty {
         get => _difficulty;
         set => SetField(ref _difficulty, value);
@@ -51,17 +54,17 @@ public class Minesweeper : INotifyPropertyChanged {
         IsFieldUnlocked = true;
         IsWin = false;
         
-        Cell[,] cells = new Cell[Difficulty.Rows, Difficulty.Columns];
+        Cell[,] cells = new Cell[Difficulty.Columns, Difficulty.Rows];
 
-        for (int i = 0; i < Difficulty.Rows; i++) {
-            for (int j = 0; j < Difficulty.Columns; j++) {
+        for (int i = 0; i < Difficulty.Columns; i++) {
+            for (int j = 0; j < Difficulty.Rows; j++) {
                 cells[i, j] = new Cell();
             }
         }
 
         for (int i = 0; i < Difficulty.Mines; i++) {
-            int randomCellX = Random.Shared.Next(0, Difficulty.Rows);
-            int randomCellY = Random.Shared.Next(0, Difficulty.Columns);
+            int randomCellX = Random.Shared.Next(0, Difficulty.Columns);
+            int randomCellY = Random.Shared.Next(0, Difficulty.Rows);
             cells[randomCellX, randomCellY] = Cell.CreateMine();
         }
 
@@ -128,23 +131,20 @@ public class Minesweeper : INotifyPropertyChanged {
         if (!IsFieldUnlocked) return;
         IsFieldUnlocked = false;
         OpenAllCells();
+        Losed?.Invoke();
         MessageBox.Show("Поздравляю с поражением, но ничего, игра - это не настоящая жизнь, можешь пробовать сколько хочется!");
     }
 
     private void CheckWin() {
         if (IsWin) return;
-        int totalFlaggedRight = 0;
-        foreach (var cell in Field) {
-            if (cell.IsMine && cell.IsFlagged) {
-                totalFlaggedRight++;
-            }
-        }
+        int totalFlaggedRight = Field.Count(c => c.IsMine && c.IsFlagged);
 
         if (totalFlaggedRight != Difficulty.Mines) return;
 
         MessageBox.Show("Ура победа!");
         IsFieldUnlocked = false;
         IsWin = true;
+        Won?.Invoke();
         OpenAllCells();
     }
 
