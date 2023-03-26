@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Sweepminer;
@@ -19,10 +20,7 @@ public class ViewModelBase : INotifyPropertyChanged, INotifyPropertyChanging
     /// <returns>true - если изменено, иначе false</returns>
     protected bool SetPropertyIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
     {
-        if (Equals(field, value))
-        {
-            return false;
-        }
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
         OnPropertyChanging(propertyName);
         field = value;
         OnPropertyChanged(propertyName);

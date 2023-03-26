@@ -10,4 +10,10 @@ public class Difficulty {
     public int Rows { get; set; }
     public int Columns { get; set; }
     public int Mines { get; set; }
+
+    public Difficulty(int rows, int columns, int mines) {
+        Rows = rows;
+        Columns = columns;
+        Mines = mines;
+    }
 }

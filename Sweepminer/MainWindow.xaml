@@ -13,6 +13,7 @@
     </Window.DataContext>
     <Window.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolConverter" />
+        <local:InverseBoolConverter x:Key="InverseBoolConverter" />
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <ToolBarTray DockPanel.Dock="Top">
@@ -21,11 +22,15 @@
             </ToolBar>
         </ToolBarTray>
         
-        <ListView Margin="10" ItemsSource="{Binding Cells}">
+        <ListView Margin="10" ItemsSource="{Binding Game.Field}">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type m:Cell}">
                     <StackPanel>
                         <Button Width="32" Height="32" Command="{Binding OpenCommand}">
+                            <Button.IsEnabled>
+                                <!-- <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.Game.IsFieldUnlocked" /> -->
+                                <Binding Path="IsOpened" Converter="{StaticResource InverseBoolConverter}"/>
+                            </Button.IsEnabled>
                             <Button.InputBindings>
                                 <MouseBinding Gesture="RightClick" Command="{Binding FlagCommand}" />
                             </Button.InputBindings>
@@ -40,7 +45,8 @@
 
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="{Binding Columns}" HorizontalAlignment="Left" VerticalAlignment="Top" Rows="{Binding Rows}"/>
+                    <UniformGrid Columns="{Binding Game.Difficulty.Columns}" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                 Rows="{Binding Game.Difficulty.Rows}"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>

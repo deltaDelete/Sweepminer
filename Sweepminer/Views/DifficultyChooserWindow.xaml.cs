@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Sweepminer.Models;
+using Sweepminer.ViewModels;
 
 namespace Sweepminer.Views;
 /// <summary>
@@ -19,5 +21,18 @@ namespace Sweepminer.Views;
 public partial class DifficultyChooserWindow : Window {
     public DifficultyChooserWindow() {
         InitializeComponent();
+    }
+    public Difficulty SelectedDifficulty {
+        get => (DataContext as DifficultyChooserViewModel).SelectedDifficulty;
+    }
+
+    public void CancelClick(object sender, RoutedEventArgs e) {
+        DialogResult = false;
+        Close();
+    }
+
+    public void OkClick(object sender, RoutedEventArgs e) {
+        DialogResult = true;
+        Close();
     }
 }

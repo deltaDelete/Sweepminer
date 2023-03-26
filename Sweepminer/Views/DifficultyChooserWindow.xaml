@@ -4,13 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sweepminer.Views"
+        xmlns:vm="clr-namespace:Sweepminer.ViewModels"
+        xmlns:m="clr-namespace:Sweepminer.Models"
         mc:Ignorable="d"
-        Title="DifficultyChooserWindow" Height="450" Width="800">
+        WindowStyle="ToolWindow"
+        Topmost="True"
+        Title="DifficultyChooserWindow" Height="200" Width="250">
     <Window.DataContext>
         <vm:DifficultyChooserViewModel />
     </Window.DataContext>
-    <StackPanel>
-        <ListView ItemsSource="{Binding Difficulties}">
+    <DockPanel LastChildFill="True">
+        <WrapPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="10">
+            <Button Content="Ок" Click="OkClick" Padding="10 2" Margin="10 2"/>
+            <Button Content="Отмена" Click="CancelClick" Padding="10 2" Margin="10 2"/>
+        </WrapPanel>
+        <ListView ItemsSource="{Binding Difficulties}" SelectedItem="{Binding SelectedDifficulty}" SelectedIndex="0">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type m:Difficulty}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>
+                                <Run Text="Размер поля: " />
+                                <Run Text="{Binding Columns}" />
+                                <Run Text="x" />
+                                <Run Text="{Binding Rows}" />
+                            </TextBlock>
+                            <Separator />
+                            <TextBlock>
+                                <Run Text="Количество мин: " />
+                                <Run Text="{Binding Mines}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-    </StackPanel>
+    </DockPanel>
 </Window>
