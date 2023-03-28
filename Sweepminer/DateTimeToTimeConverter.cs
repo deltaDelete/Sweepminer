@@ -7,7 +7,15 @@ namespace Sweepminer;
 
 public class DateTimeToTimeConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-        return ((DateTime)value).ToString("T");
+д        if (value is DateTime time) {
+            return time.ToString("HH:mm:ss");
+        }
+
+        if (value is TimeSpan timeSpan) {
+            return timeSpan.ToString("g")[..^3];
+        }
+
+        return DependencyProperty.UnsetValue;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
