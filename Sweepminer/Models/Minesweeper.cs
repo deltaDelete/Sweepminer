@@ -65,7 +65,10 @@ public class Minesweeper : INotifyPropertyChanged {
         for (int i = 0; i < Difficulty.Mines; i++) {
             int randomCellX = Random.Shared.Next(0, Difficulty.Columns);
             int randomCellY = Random.Shared.Next(0, Difficulty.Rows);
-            cells[randomCellX, randomCellY] = Cell.CreateMine();
+            if (cells[randomCellX, randomCellY].IsMine) {
+                i--;
+            } else
+                cells[randomCellX, randomCellY] = Cell.CreateMine();
         }
 
         Flags = Difficulty.Mines;
