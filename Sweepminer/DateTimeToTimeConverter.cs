@@ -7,7 +7,7 @@ namespace Sweepminer;
 
 public class DateTimeToTimeConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-д        if (value is DateTime time) {
+        if (value is DateTime time) {
             return time.ToString("HH:mm:ss");
         }
 
