@@ -142,9 +142,9 @@ public class Minesweeper : INotifyPropertyChanged {
         if (IsWin) return;
         int totalFlaggedRight = Field.Count(c => c.IsMine && c.IsFlagged);
 
+        if (Field.Any(c => !c.IsMine && !c.IsOpened)) return;
         if (totalFlaggedRight != Difficulty.Mines) return;
-
-        MessageBox.Show("Ура победа!");
+        
         IsFieldUnlocked = false;
         IsWin = true;
         Won?.Invoke();
