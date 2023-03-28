@@ -41,6 +41,11 @@
                     <Run>Время: </Run>
                     <Run Text="{Binding Timer, Mode=OneWay,Converter={StaticResource DateTimeConverter}}"/>
                 </TextBlock>
+                <Separator />
+                <TextBlock VerticalAlignment="Center">
+                    <Run>Флажков: </Run>
+                    <Run Text="{Binding Game.Flags, Mode=OneWay}"/>
+                </TextBlock>
             </ToolBar>
         </ToolBarTray>
         
